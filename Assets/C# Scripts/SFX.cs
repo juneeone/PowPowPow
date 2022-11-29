@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//효과음 관리
 public class SFX : MonoBehaviour
 {
     static AudioSource audiosource;

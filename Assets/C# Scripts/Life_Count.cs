@@ -10,13 +10,13 @@ public class Life_Count : MonoBehaviour
     public int life_count = 5;
 
     public int apple_count;
-    // Start is called before the first frame update
+
     void Start()
     {
         life = GetComponent<Text>();
     }
 
-    // Update is called once per frame
+    //지금까지 획득한 사과 갯수 표기
     void Update()
     {
         life.text = "APPLE x " + PlayerControl.apple_count.ToString();

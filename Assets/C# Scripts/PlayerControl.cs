@@ -18,13 +18,13 @@ public class PlayerControl : MonoBehaviour
     private Key key;
 
 
-    //오브젝트를 설정할 게이트
+    //스테이지 구간을 막을 게이트 오브젝트 설정
     public GameObject Gate_1;
     public GameObject Gate_2;
     public GameObject Gate_Bonus;
     public GameObject Bridge;
 
-    //게이트 통과 점수 설정 및 스테이지 별 슬라임이 장애물 파괴 가능한 기점을 설정하기 위한 사과 갯수
+    //게이트 통과 점수 설정 및 스테이지 별 슬라임이 장애물 파괴 가능한 기점을 설정하기 위한 사과 갯수 설정
     public float Gate_1_Score;          
     public float Gate_2_Score;
     public float Button_Count = 0;         
@@ -70,8 +70,8 @@ public class PlayerControl : MonoBehaviour
         // 키가 눌렸으면.
         if (this.key.right)
         { 
-            move_vector += Vector3.right; // 이동용 벡터를 오른쪽으로 향한다.
-            is_moved = true; // '이동 중' 플래그.
+            move_vector += Vector3.right;                           // 이동용 벡터를 오른쪽으로 향한다.
+            is_moved = true;                                            // '이동 중' 플래그.
         }
         if (this.key.left)
         {
@@ -126,18 +126,19 @@ public class PlayerControl : MonoBehaviour
             this.transform.Translate(Vector3.right * move_speed * Time.deltaTime);
         }
 
-
-        if (Input.GetKey(KeyCode.Space))                 //점프 버튼=SPACE
+        //점프 버튼=SPACE
+        if (Input.GetKey(KeyCode.Space))                
         {           
             jump_power += 3 * jump_powerplus * Time.deltaTime;          //누른 시간에 비례하여 점프 높이 증가
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))           //점프 버튼을 떼면 점프한다.
+        //점프 버튼을 떼면 점프한다.
+        if (Input.GetKeyUp(KeyCode.Space))           
         {
             SFX.Slime_Jump();                               //점프 효과음
             SFX.Play_Jump();
             this.GetComponent<Rigidbody>().AddForce(new Vector3(0, 5 * jump_power, 0));
-            jump_power = 0.0f;
+            jump_power = 0.0f;                             //위에서 누적된 점프력을 0으로 초기화
         }
 
  
@@ -147,14 +148,15 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //만약 닿은 아이템의 태그가 사과라면 획득한 사과 숫자에 따라 크기가 커진다
+        //만약 닿은 아이템의 태그가 사과라면. 사과 갯수 +1 / 점수 +300점 
         if (other.gameObject.tag == "Apple")            
         {
             SFX.Play_Apple();                            //사과 획득 효과음 재생
             Destroy(other.gameObject);
             apple_count += 1;
-            score_count += 300;                     //한 프라이빗 안에 전부 들어있어서 위의 스코어로 크기가 계속 커지는 문제 발생(해결: Apple 조건문 내에 투입)
+            score_count += 300;
 
+            //획득한 사과 숫자에 따라 크기가 커진다.
             float growX = transform.localScale.x + (2 * (apple_count+1));
             float growY = transform.localScale.y + (2 * (apple_count+1));
             float growZ = transform.localScale.z + (2 * (apple_count+1));
@@ -266,13 +268,6 @@ public class PlayerControl : MonoBehaviour
             Destroy(Gate_2, 3);
             Button_Count = 0;
             Debug.Log("버튼을 모두 눌렀습니다. 문이 열립니다.");
-        }
-
-        if (other.gameObject.tag=="Enemy")
-        {        
-            life_count -=1;
-            Debug.Log(life_count);
-           
         }
 
     }

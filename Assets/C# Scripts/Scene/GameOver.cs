@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+//게임오버 화면으로 연결
 public class GameOver : MonoBehaviour
 {
     public string Over_Scene;
