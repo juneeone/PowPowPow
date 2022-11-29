@@ -13,14 +13,12 @@ public class Camera : MonoBehaviour
 
     private Transform tr;
 
-    // Start is called before the first frame update
     void Start()
     {
         tr = GetComponent<Transform>();
         
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         tr.position = target.position - (1 * Vector3.forward * dist) + (Vector3.up * height);
